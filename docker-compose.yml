@@ -1,0 +1,39 @@
+version: "3.8"
+services:
+  nginx:
+    depends_on:
+      - api 
+      - web
+    restart: always
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./nginx
+    ports:
+      - '3050:80'
+  api:
+    #image: "wcoei/testweb"
+    build: 
+      context: ./api/
+      dockerfile: Dockerfile.dev
+    #ports:
+    #  - "5001:5000"
+    volumes:
+      - /app/node_modules
+      - ./api:/app
+    environment:
+        #  - CI=true
+           - CHOKIDAR_USEPOLLING=true
+  web:
+    #image: "wcoei/testweb"
+    build: 
+      context: ./web/
+      dockerfile: Dockerfile.dev
+    #ports:
+    #  - "3001:3000"
+    volumes:
+      - /app/node_modules
+      - ./web:/app
+    stdin_open: true
+    environment:
+    #  - CI=true
+       - CHOKIDAR_USEPOLLING=true

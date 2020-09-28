@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proxy-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: proxy
+  template:
+    metadata:
+      labels:
+        component: proxy
+    spec:
+      containers:
+        - name: proxy
+          image: wcoei/testproxy
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: proxy
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:us-west-2:989452627999:certificate/c1625db3-2295-4bde-96c0-d23739234f7e
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+spec:
+#  type: ClusterIP
+  type: LoadBalancer
+  selector:
+    component: proxy
+  ports:
+#    - port: 3050
+    - protocol: TCP
+      port: 443
+      targetPort: 80
+    
