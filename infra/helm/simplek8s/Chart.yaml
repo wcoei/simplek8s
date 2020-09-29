@@ -1,0 +1,6 @@
+apiVersion: v2
+name: simplek8s
+description: Helm chart for simplek8s
+type: application
+version: 0.1.0
+appVersion: 1.16.0
