@@ -28,10 +28,19 @@ spec:
   http:
   - match:
     - uri:
+        prefix: /api/
+    rewrite:
+      uri: /
+    route:
+    - destination:
+        port:
+          number: 5000
+        host: api
+  - match:
+    - uri:
         prefix: /
     route:
     - destination:
         port:
           number: 3000
-        host: proxy
-
+        host: web
