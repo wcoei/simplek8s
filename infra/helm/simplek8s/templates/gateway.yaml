@@ -15,6 +15,15 @@ spec:
     tls:
       mode: SIMPLE
       credentialName: ingress-cert
+  - port:
+      number: 443
+      name: https-tiengow
+      protocol: HTTPS
+    hosts:
+    - "tiengow.wcoei.net"
+    tls:
+      mode: SIMPLE
+      credentialName: tiengow-cert
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -36,6 +45,25 @@ spec:
         port:
           number: 5000
         host: api
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        port:
+          number: 3000
+        host: web
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: tiengow
+spec:
+  hosts:
+  - "tiengow.wcoei.net"
+  gateways:
+  - proxy-gateway
+  http:
   - match:
     - uri:
         prefix: /

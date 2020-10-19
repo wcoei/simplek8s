@@ -17,3 +17,18 @@ spec:
   #       ingressClass: istio
   #     domains:
   #     - simplek8s.wcoei.net
+---
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: tiengow-cert
+  namespace: istio-system
+spec:
+  secretName: tiengow-cert
+  issuerRef:
+    name: letsencrypt-prod 
+    kind: Issuer
+  commonName: tiengow.wcoei.net
+  dnsNames:
+  - tiengow.wcoei.net
+ 
