@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sio-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: sio
+  template:
+    metadata:
+      labels:
+        component: sio
+    spec:
+      containers:
+        - name: sio
+          image: wcoei/socketio
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sio
+spec:
+  type: ClusterIP
+  selector:
+    component: sio
+  ports:
+  - port: 4000
+    targetPort: 4000
+    name: sio

@@ -70,5 +70,5 @@ spec:
     route:
     - destination:
         port:
-          number: 3000
-        host: web
+          number: 4000
+        host: sio
